@@ -37,13 +37,26 @@ const displayCategories = (categories) => {
     button.innerText = category.category;
 
     categoriesContainer.appendChild(button);
+
+    button.onclick = () => {
+      loadCategoriesVideos(category.category_id);
+    };
   });
 };
 
+async function loadCategoriesVideos(categoryId) {
+  console.log(categoryId);
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/phero-tube/category/${categoryId}`
+  );
+  const data = await res.json();
+  displayVideos(data.category);
+}
+
 const displayVideos = (videos) => {
   const videosContainer = document.getElementById("videos-container");
+  videosContainer.innerHTML = ""; // clear previous videos
   videos.forEach((video) => {
-    console.log(video);
     // create a video card
     const videoCard = document.createElement("div");
     videoCard.classList = "card p-4";
