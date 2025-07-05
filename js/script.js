@@ -56,6 +56,19 @@ async function loadCategoriesVideos(categoryId) {
 const displayVideos = (videos) => {
   const videosContainer = document.getElementById("videos-container");
   videosContainer.innerHTML = ""; // clear previous videos
+
+  if (videos.length === 0) {
+    videosContainer.classList.remove("grid");
+    videosContainer.innerHTML = `
+    <div class="flex flex-col items-center justify-center">
+      <img src="assets/icon.png" alt="No videos found" class=" mx-auto my-8" />
+      <h2 class="text-2xl font-semibold text-center my-4">Oops!! Sorry, There is no content here</h2>
+    </div>
+    `;
+    return;
+  } else {
+    videosContainer.classList.add("grid");
+  }
   videos.forEach((video) => {
     // create a video card
     const videoCard = document.createElement("div");
